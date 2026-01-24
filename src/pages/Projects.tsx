@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 import { useState } from 'react';
 
-const filters = ['All', 'Healthcare', 'Finance', 'Enterprise', 'HRMS'];
+const filters = ['All', 'Healthcare', 'Costeta', 'Enterprise', 'HRMS'];
 
 const caseStudies = [
   {
@@ -40,18 +40,18 @@ const caseStudies = [
   },
   {
     id: 3,
-    company: 'AR Calling System',
-    industry: 'Enterprise',
-    headline: 'Building a real-time calling platform for 500+ users',
-    challenge: 'The client needed a reliable WebRTC-based calling solution with low latency and high connection reliability.',
-    solution: 'We built a cross-platform calling app using React Native with WebRTC integration and robust signaling infrastructure.',
+    company: 'VorQard',
+    industry: 'Healthcare',
+    headline: 'Revolutionizing Patient Flow with QR-Based Management',
+    challenge: 'Clinics struggled with manual patient registration, long queues, and managing physical patient records efficiently.',
+    solution: 'Implemented VorQard, a comprehensive QR-based system for instant check-ins, digital medical records, and automated billing.',
     results: [
-      { metric: '500+', label: 'Active Users' },
-      { metric: '99.2%', label: 'Connection Rate' },
-      { metric: '<200ms', label: 'Latency' }
+      { metric: '40%', label: 'Wait Time Reduction' },
+      { metric: '100%', label: 'Digital Data' },
+      { metric: 'HIPAA', label: 'Compliant' }
     ],
-    technologies: ['React Native', 'WebRTC', 'Node.js', 'Redis'],
-    timeline: 'Ongoing'
+    technologies: ['React', 'Node.js', 'PostgreSQL', 'QR Integration'],
+    timeline: 'In Progress'
   },
   {
     id: 4,
@@ -70,18 +70,33 @@ const caseStudies = [
   },
   {
     id: 5,
-    company: 'Multi-Company HRMS',
-    industry: 'HRMS',
-    headline: 'Deploying VORN HR across 10+ companies managing 5,000+ employees',
-    challenge: 'Multiple companies needed a unified HR solution that could handle diverse requirements while maintaining data isolation.',
-    solution: 'We implemented a multi-tenant VORN HR architecture with company-specific customizations and a centralized admin portal.',
+    company: 'Abhivorn Issue Pilot',
+    industry: 'Enterprise',
+    headline: 'Internal AI-Powered Ticketing and Project Management System',
+    challenge: 'Managing complex development cycles and client issues across multiple projects without a centralized, intelligent tracking system.',
+    solution: 'We developed an internal pilot system that uses AI to categorize, prioritize, and assign development tickets based on team velocity and expertise.',
     results: [
-      { metric: '10+', label: 'Companies Deployed' },
-      { metric: '5,000+', label: 'Employees Managed' },
-      { metric: '99.8%', label: 'Uptime' }
+      { metric: '100%', label: 'Internal Adoption' },
+      { metric: '40%', label: 'Issue Resolution Speed' },
+      { metric: '25%', label: 'Planning Efficiency' }
     ],
-    technologies: ['VORN HR', 'AWS', 'PostgreSQL', 'Docker'],
+    technologies: ['React', 'Node.js', 'PostgreSQL', 'AI/ML'],
     timeline: 'Ongoing'
+  },
+  {
+    id: 6,
+    company: 'Costeta',
+    industry: 'Costeta',
+    headline: 'Advanced Cost Tracking and Budget Optimization Platform',
+    challenge: 'A growing enterprise struggled with disparate cost centers and lacked a unified view of real-time expenditures vs budgets.',
+    solution: 'Built a robust fintech dashboard that aggregates costs from multiple departments, providing real-time alerts and predictive budget forecasting.',
+    results: [
+      { metric: '15%', label: 'Average Cost Savings' },
+      { metric: 'Real-time', label: 'Visibility' },
+      { metric: '100%', label: 'Compliance Rate' }
+    ],
+    technologies: ['Next.js', 'TypeScript', 'PostgreSQL'],
+    timeline: '12 weeks'
   }
 ];
 
@@ -143,11 +158,10 @@ export default function Projects() {
               <button
                 key={filter}
                 onClick={() => setActiveFilter(filter)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
-                  activeFilter === filter
-                    ? 'bg-accent text-accent-foreground'
-                    : 'bg-muted text-muted-foreground hover:bg-muted/80'
-                }`}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${activeFilter === filter
+                  ? 'bg-accent text-accent-foreground'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/80'
+                  }`}
               >
                 {filter}
               </button>

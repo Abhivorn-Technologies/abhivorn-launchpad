@@ -10,10 +10,10 @@ import emailjs from '@emailjs/browser';
 // 5. Replace the values below with your own
 
 export const EMAILJS_CONFIG = {
-  serviceId: 'YOUR_SERVICE_ID', // Replace with your EmailJS service ID
-  contactTemplateId: 'YOUR_CONTACT_TEMPLATE_ID', // Template for contact form
-  applicationTemplateId: 'YOUR_APPLICATION_TEMPLATE_ID', // Template for job applications
-  publicKey: 'YOUR_PUBLIC_KEY', // Replace with your EmailJS public key
+  serviceId: import.meta.env.VITE_EMAILJS_SERVICE_ID || '',
+  contactTemplateId: import.meta.env.VITE_EMAILJS_CONTACT_TEMPLATE_ID || '',
+  applicationTemplateId: import.meta.env.VITE_EMAILJS_APPLICATION_TEMPLATE_ID || '',
+  publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY || '',
 };
 
 // Initialize EmailJS
@@ -45,7 +45,16 @@ export const sendContactEmail = async (data: {
   );
 };
 
-// Send job application email
+// Send job application email via Form (Support for attachments)
+export const sendApplicationForm = async (formElement: HTMLFormElement) => {
+  return emailjs.sendForm(
+    EMAILJS_CONFIG.serviceId,
+    EMAILJS_CONFIG.applicationTemplateId,
+    formElement
+  );
+};
+
+// Deprecated: Send job application email (JSON only)
 export const sendApplicationEmail = async (data: {
   name: string;
   email: string;

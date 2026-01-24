@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Linkedin, Github, Mail, Phone, MapPin } from 'lucide-react';
+import { Linkedin, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 import logo from '@/assets/logo.png';
 
 const footerLinks = {
@@ -17,14 +17,14 @@ const footerLinks = {
   ],
   contact: [
     { icon: Mail, text: 'hello@abhivorn.com', href: 'mailto:hello@abhivorn.com' },
-    { icon: Phone, text: '+91 9876543210', href: 'tel:+919876543210' },
+    { icon: Phone, text: '+91 9966629766', href: 'tel:+919966629766' },
     { icon: MapPin, text: 'Hyderabad, Telangana, India', href: '#' },
   ],
 };
 
 const socialLinks = [
   { icon: Linkedin, href: 'https://linkedin.com/company/abhivorn-technologies', label: 'LinkedIn' },
-  { icon: Github, href: 'https://github.com/abhivorn', label: 'GitHub' },
+  { icon: Instagram, href: 'https://www.instagram.com/abhivorn_technologies?igsh=amh3bWw2d2N1bDVq', label: 'Instagram' },
 ];
 
 export default function Footer() {
@@ -34,7 +34,13 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Company Info */}
           <div className="space-y-6">
-            <img src={logo} alt="Abhivorn Technologies" className="h-10 w-auto brightness-0 invert" />
+            <Link to="/" className="inline-block group">
+              <img
+                src={logo}
+                alt="Abhivorn Technologies"
+                className="h-10 w-auto brightness-0 invert transition-all duration-300 group-hover:brightness-100 group-hover:invert-0"
+              />
+            </Link>
             <p className="text-primary-foreground/80 text-sm leading-relaxed">
               Enterprise-grade HR & Healthcare solutions for modern businesses. Building the future of enterprise software.
             </p>
@@ -45,7 +51,10 @@ export default function Footer() {
                   href={social.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center hover:bg-primary-foreground/20 transition-colors"
+                  className={`w-10 h-10 rounded-full bg-primary-foreground/10 flex items-center justify-center transition-all duration-300 ${social.label === 'LinkedIn'
+                    ? 'hover:bg-[#0A66C2] hover:scale-110'
+                    : 'hover:bg-gradient-to-br hover:from-[#833AB4] hover:via-[#E1306C] hover:to-[#F77737] hover:scale-110'
+                    }`}
                   aria-label={social.label}
                 >
                   <social.icon className="h-5 w-5" />

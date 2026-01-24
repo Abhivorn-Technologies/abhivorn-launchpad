@@ -24,8 +24,8 @@ const contactInfo = [
   {
     icon: Phone,
     title: 'Phone',
-    content: '+91 9876543210',
-    href: 'tel:+919876543210'
+    content: '+91 9966629766',
+    href: 'tel:+91 9966629766'
   },
   {
     icon: MapPin,
@@ -108,21 +108,20 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!formData.consent) {
       toast.error('Please agree to be contacted before submitting.');
       return;
     }
 
     // Check if EmailJS is configured
-    if (EMAILJS_CONFIG.publicKey === 'YOUR_PUBLIC_KEY') {
-      toast.error('EmailJS is not configured. Please set up your EmailJS credentials in src/lib/emailjs.ts');
-      console.log('Form data (EmailJS not configured):', formData);
+    if (!EMAILJS_CONFIG.publicKey) {
+      toast.error('EmailJS is not configured. Please set up your EmailJS credentials in the .env file');
       return;
     }
 
     setIsSubmitting(true);
-    
+
     try {
       await sendContactEmail({
         name: formData.name,
@@ -132,7 +131,7 @@ export default function Contact() {
         inquiryType: formData.inquiryType,
         message: formData.message,
       });
-      
+
       toast.success('Thank you! We\'ll respond within 24 hours.');
       setFormData({
         name: '',
@@ -185,7 +184,7 @@ export default function Contact() {
               transition={{ duration: 0.6 }}
             >
               <h2 className="text-2xl font-bold text-foreground mb-8">Contact Information</h2>
-              
+
               <div className="space-y-6 mb-10">
                 {contactInfo.map((item) => (
                   <a
@@ -244,7 +243,7 @@ export default function Contact() {
             >
               <div className="bg-card border border-border rounded-2xl p-8">
                 <h2 className="text-2xl font-bold text-foreground mb-6">Send us a message</h2>
-                
+
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div className="grid sm:grid-cols-2 gap-4">
                     <div>

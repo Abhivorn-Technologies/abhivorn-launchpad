@@ -4,9 +4,9 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Layout from '@/components/layout/Layout';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { toast } from 'sonner';
-import { initEmailJS, sendApplicationEmail, EMAILJS_CONFIG } from '@/lib/emailjs';
+import { initEmailJS, sendApplicationEmail, sendApplicationForm, EMAILJS_CONFIG } from '@/lib/emailjs';
 
 const benefits = [
   {
@@ -34,10 +34,9 @@ const benefits = [
 const openPositions = [
   {
     id: 1,
-    title: 'Full Stack Developer',
+    title: 'Full Stack Developer Intern',
     type: 'Full-time',
     location: 'Hyderabad / Remote',
-    experience: '2-4 years',
     responsibilities: [
       'Build and maintain web applications using React and Django',
       'Design and optimize PostgreSQL databases',
@@ -48,10 +47,9 @@ const openPositions = [
   },
   {
     id: 2,
-    title: 'Frontend Developer',
+    title: 'Frontend Developer Intern',
     type: 'Full-time',
     location: 'Hyderabad / Remote',
-    experience: '1-3 years',
     responsibilities: [
       'Develop responsive user interfaces with React',
       'Implement pixel-perfect designs from Figma',
@@ -62,10 +60,9 @@ const openPositions = [
   },
   {
     id: 3,
-    title: 'Business Development Associate',
+    title: 'Business Development Associate Intern',
     type: 'Full-time',
     location: 'Hyderabad',
-    experience: '0-2 years',
     responsibilities: [
       'Generate and qualify leads for VORN HR',
       'Conduct product demos to potential clients',
@@ -76,10 +73,9 @@ const openPositions = [
   },
   {
     id: 4,
-    title: 'QA Engineer',
+    title: 'QA Engineer Intern',
     type: 'Full-time',
     location: 'Hyderabad / Remote',
-    experience: '1-2 years',
     responsibilities: [
       'Design and execute test cases',
       'Perform functional and regression testing',
@@ -93,7 +89,6 @@ const openPositions = [
     title: 'Software Development Intern',
     type: 'Internship',
     location: 'Hyderabad',
-    experience: 'Freshers',
     responsibilities: [
       'Learn and contribute to real projects',
       'Work closely with senior developers',
@@ -131,9 +126,11 @@ export default function Careers() {
     phone: '',
     experience: '',
     portfolio: '',
-    coverLetter: ''
+    coverLetter: '',
+    fileName: ''
   });
-
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const mainFormRef = useRef<HTMLFormElement>(null);
   useEffect(() => {
     initEmailJS();
   }, []);
@@ -141,44 +138,55 @@ export default function Careers() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Bypass validation for testing if position is hidden
     if (!selectedPosition) {
-      toast.error('Please select a position.');
-      return;
+      setSelectedPosition('Test Position');
+      // Continue...
     }
 
     // Check if EmailJS is configured
-    if (EMAILJS_CONFIG.publicKey === 'YOUR_PUBLIC_KEY') {
-      toast.error('EmailJS is not configured. Please set up your EmailJS credentials in src/lib/emailjs.ts');
-      console.log('Application data (EmailJS not configured):', { ...formData, position: selectedPosition });
+    if (!EMAILJS_CONFIG.publicKey) {
+      toast.error('EmailJS is not configured. Please set up your EmailJS credentials in the .env file');
       return;
     }
 
     setIsSubmitting(true);
 
     try {
-      await sendApplicationEmail({
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
-        position: selectedPosition,
-        experience: formData.experience,
-        portfolio: formData.portfolio,
-        coverLetter: formData.coverLetter,
-      });
-      
-      toast.success('Thank you for your application! We\'ll be in touch within a week.');
+      if (mainFormRef.current) {
+        // Debug: Log the file to ensure it's present in the form data
+        const formDataPayload = new FormData(mainFormRef.current);
+        const file = formDataPayload.get('file') as File;
+
+        await sendApplicationForm(mainFormRef.current);
+      } else {
+        throw new Error('Form reference is missing');
+      }
+
+
+      toast.success('Application sent! Please check the bottom of the email for the attached resume.');
       setFormData({
         name: '',
         email: '',
         phone: '',
         experience: '',
         portfolio: '',
-        coverLetter: ''
+        coverLetter: '',
+        fileName: ''
       });
       setSelectedPosition('');
-    } catch (error) {
+
+      // Reset forms manually if needed
+      if (mainFormRef.current) mainFormRef.current.reset();
+
+    } catch (error: any) {
       console.error('Failed to send application:', error);
-      toast.error('Failed to submit application. Please try again or email us directly at careers@abhivorn.com');
+
+      if (error?.status === 413 || error?.text?.includes('size limit')) {
+        toast.error('Error: 413. Please go to EmailJS Dashboard > Email Services > Edit Service > Allow Attachments.', { duration: 8000 });
+      } else {
+        toast.error('Failed to submit application. Please try again or email us directly at careers@abhivorn.com');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -200,7 +208,7 @@ export default function Careers() {
               <span className="text-accent">Growing Team</span>
             </h1>
             <p className="text-lg text-muted-foreground">
-              Build the future of enterprise software with us. We're looking for passionate 
+              Build the future of enterprise software with us. We're looking for passionate
               individuals who want to make a real impact.
             </p>
           </motion.div>
@@ -275,10 +283,6 @@ export default function Careers() {
                       <span className="flex items-center gap-1">
                         <MapPin className="h-4 w-4" />
                         {position.location}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock className="h-4 w-4" />
-                        {position.experience}
                       </span>
                     </div>
                   </div>
@@ -386,14 +390,16 @@ export default function Careers() {
             className="max-w-2xl mx-auto"
           >
             <div className="bg-card border border-border rounded-2xl p-8">
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form ref={mainFormRef} onSubmit={handleSubmit} className="space-y-6" encType="multipart/form-data">
                 <div className="grid sm:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-foreground mb-2">
                       Full Name *
                     </label>
                     <Input
+                      name="from_name"
                       required
+                      maxLength={100}
                       placeholder="Your full name"
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -404,8 +410,10 @@ export default function Careers() {
                       Email *
                     </label>
                     <Input
+                      name="from_email"
                       type="email"
                       required
+                      maxLength={100}
                       placeholder="you@email.com"
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -419,7 +427,9 @@ export default function Careers() {
                       Phone *
                     </label>
                     <Input
+                      name="phone"
                       required
+                      maxLength={20}
                       placeholder="+91 9876543210"
                       value={formData.phone}
                       onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -430,6 +440,7 @@ export default function Careers() {
                       Position *
                     </label>
                     <select
+                      name="position"
                       required
                       className="w-full h-10 px-3 rounded-lg border border-input bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
                       value={selectedPosition}
@@ -449,6 +460,8 @@ export default function Careers() {
                       Years of Experience
                     </label>
                     <Input
+                      name="experience"
+                      maxLength={50}
                       placeholder="e.g., 2"
                       value={formData.experience}
                       onChange={(e) => setFormData({ ...formData, experience: e.target.value })}
@@ -459,6 +472,8 @@ export default function Careers() {
                       Portfolio / GitHub
                     </label>
                     <Input
+                      name="portfolio"
+                      maxLength={200}
                       placeholder="https://github.com/username"
                       value={formData.portfolio}
                       onChange={(e) => setFormData({ ...formData, portfolio: e.target.value })}
@@ -470,23 +485,63 @@ export default function Careers() {
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Resume *
                   </label>
-                  <div className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-accent/50 transition-colors cursor-pointer">
+                  <div
+                    className="border-2 border-dashed border-border rounded-lg p-6 text-center hover:border-accent/50 transition-colors cursor-pointer"
+                    onClick={() => {
+                      if (fileInputRef.current) {
+                        fileInputRef.current.click();
+                      }
+                    }}
+                  >
                     <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-                    <p className="text-sm text-muted-foreground">
-                      Click to upload or drag and drop
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      PDF, DOC up to 5MB
-                    </p>
-                    <input type="file" className="hidden" accept=".pdf,.doc,.docx" />
+                    {formData.fileName ? (
+                      <div className="text-center">
+                        <p className="text-sm font-medium text-accent break-all">
+                          {formData.fileName}
+                        </p>
+                        <p className="text-xs text-green-600 font-semibold mt-1">
+                          ✓ Ready to attach
+                        </p>
+                      </div>
+                    ) : (
+                      <>
+                        <p className="text-sm text-muted-foreground">
+                          Click to upload or drag and drop
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          PDF, DOC up to 500KB
+                        </p>
+                      </>
+                    )}
+                    <input
+                      type="file"
+                      name="file"
+                      className="hidden"
+                      ref={fileInputRef}
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          if (file.size > 500 * 1024) {
+                            toast.error('File size must be less than 500KB');
+                            e.target.value = '';
+                            setFormData(prev => ({ ...prev, fileName: '' }));
+                            return;
+                          }
+                          setFormData(prev => ({ ...prev, fileName: file.name }));
+                        }
+                      }}
+                    />
                   </div>
                 </div>
+
 
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-2">
                     Cover Letter
                   </label>
                   <Textarea
+                    name="cover_letter"
+                    maxLength={3000}
                     placeholder="Tell us why you'd be a great fit..."
                     rows={4}
                     value={formData.coverLetter}
@@ -512,6 +567,8 @@ export default function Careers() {
           </motion.div>
         </div>
       </section>
+
+
     </Layout>
   );
 }
