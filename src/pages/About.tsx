@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { Linkedin, Target, Lightbulb, Shield, Award, Calendar } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
+import AboutOffice from '@/assets/about-office.png';
+
 
 const fadeInUp = {
   initial: { opacity: 0, y: 30 },
@@ -72,7 +74,7 @@ export default function About() {
               <span className="text-accent">Enterprise Software</span>
             </h1>
             <p className="text-lg text-muted-foreground">
-              Founded in 2025, headquartered in Hyderabad. We're an MSME-registered software company 
+              Founded in 2025, headquartered in Hyderabad. We're an MSME-registered software company
               specializing in HR and healthcare solutions.
             </p>
           </motion.div>
@@ -92,20 +94,20 @@ export default function About() {
               <h2 className="text-3xl font-bold text-foreground mb-6">Our Story</h2>
               <div className="space-y-4 text-muted-foreground">
                 <p>
-                  Abhivorn Technologies was founded with a clear vision: to make enterprise-grade 
+                  Abhivorn Technologies was founded with a clear vision: to make enterprise-grade
                   software accessible to businesses of all sizes across India.
                 </p>
                 <p>
-                  Starting with our flagship product VORN HR, we've helped companies streamline 
-                  their HR operations, reduce administrative overhead, and focus on what matters 
+                  Starting with our flagship product VORN HR, we've helped companies streamline
+                  their HR operations, reduce administrative overhead, and focus on what matters
                   most—their people.
                 </p>
                 <p>
-                  Today, we're expanding into healthcare with VorQard, bringing the same 
+                  Today, we're expanding into healthcare with VorQard, bringing the same
                   commitment to quality and innovation to the medical industry.
                 </p>
               </div>
-              
+
               <div className="mt-8 flex flex-wrap gap-4">
                 <div className="px-4 py-2 bg-primary/10 rounded-lg">
                   <span className="text-sm text-primary font-medium">MSME Registered</span>
@@ -123,11 +125,17 @@ export default function About() {
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <div className="aspect-square rounded-2xl bg-gradient-to-br from-primary/20 to-accent/20 flex items-center justify-center">
-                <div className="text-center p-8">
-                  <div className="text-6xl font-bold text-primary mb-4">A</div>
-                  <div className="text-xl font-semibold text-foreground">Abhivorn</div>
-                  <div className="text-muted-foreground">Technologies</div>
+              <div className="aspect-square rounded-2xl overflow-hidden shadow-2xl relative group">
+                <img
+                  src={AboutOffice}
+                  alt="Abhivorn Technologies Office"
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end p-8">
+                  <div className="text-white">
+                    <div className="text-xl font-bold">Abhivorn Technologies</div>
+                    <div className="text-sm opacity-80">Our Hyderabad Development Center</div>
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -136,7 +144,7 @@ export default function About() {
       </section>
 
       {/* Founders Section */}
-      <section className="section-padding bg-muted/30">
+      {/* <section className="section-padding bg-muted/30">
         <div className="container-custom">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -179,7 +187,7 @@ export default function About() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Values Section */}
       <section className="section-padding bg-background">
@@ -231,7 +239,7 @@ export default function About() {
           <div className="max-w-3xl mx-auto">
             <div className="relative">
               <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-border" />
-              
+
               {milestones.map((milestone, index) => (
                 <motion.div
                   key={milestone.date}

@@ -4,12 +4,18 @@ import { ArrowRight, Heart, Calendar, Users, Shield, BarChart3, QrCode, Smartpho
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Layout from '@/components/layout/Layout';
+import VorQardClinic from '@/assets/vorqard-clinic.png';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import VorQardWaitTime from '@/assets/vorqard-wait-time.png';
+import VorQardPaperless from '@/assets/vorqard-paperless.png';
+import VorQardTracking from '@/assets/vorqard-tracking.png';
+import VorQardPatient from '@/assets/vorqard-patient.png';
+
 
 const features = [
   {
@@ -48,22 +54,26 @@ const benefits = [
   {
     title: '40% Reduction in Wait Times',
     description: 'Smart queue management and QR-based check-ins eliminate bottlenecks at reception, reducing patient wait times significantly.',
-    stats: '40% faster patient flow'
+    stats: '40% faster patient flow',
+    image: VorQardWaitTime
   },
   {
     title: 'Zero Paperwork',
     description: 'Digital records, e-prescriptions, and automated documentation eliminate paper-based processes entirely.',
-    stats: '100% digital workflow'
+    stats: '100% digital workflow',
+    image: VorQardPaperless
   },
   {
     title: 'Real-Time Patient Tracking',
     description: 'Monitor patient journey from check-in to checkout with live status updates and notifications.',
-    stats: 'Complete visibility'
+    stats: 'Complete visibility',
+    image: VorQardTracking
   },
   {
     title: 'Enhanced Patient Experience',
     description: 'Patients can book appointments, access records, and receive reminders through our mobile-friendly platform.',
-    stats: 'Patient satisfaction up 60%'
+    stats: 'Patient satisfaction up 60%',
+    image: VorQardPatient
   }
 ];
 
@@ -147,8 +157,8 @@ export default function VorQard() {
               </h1>
 
               <p className="text-lg text-muted-foreground mb-8">
-                Revolutionize patient care with smart QR-based identification, 
-                streamlined appointments, and comprehensive healthcare analytics. 
+                Revolutionize patient care with smart QR-based identification,
+                streamlined appointments, and comprehensive healthcare analytics.
                 Built for modern clinics and hospitals.
               </p>
 
@@ -173,13 +183,20 @@ export default function VorQard() {
               transition={{ duration: 0.6 }}
               className="relative"
             >
-              <div className="aspect-square rounded-2xl bg-gradient-to-br from-secondary/20 via-accent/10 to-primary/10 p-8 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-32 h-32 mx-auto mb-4 rounded-2xl bg-secondary/20 flex items-center justify-center">
-                    <QrCode className="w-20 h-20 text-secondary" />
+              <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                <img
+                  src={VorQardClinic}
+                  alt="VorQard Healthcare Management System"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent flex items-end p-6">
+                  <div className="text-white">
+                    <div className="flex items-center gap-2 mb-2">
+                      <QrCode className="h-6 w-6" />
+                      <span className="text-lg font-bold">VorQard</span>
+                    </div>
+                    <div className="text-sm opacity-90">QR-Powered Patient Management</div>
                   </div>
-                  <div className="text-2xl font-bold text-foreground">VorQard</div>
-                  <div className="text-muted-foreground">Healthcare Reimagined</div>
                 </div>
               </div>
             </motion.div>
@@ -246,9 +263,8 @@ export default function VorQard() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className={`grid lg:grid-cols-2 gap-12 items-center ${
-                  index % 2 === 1 ? 'lg:flex-row-reverse' : ''
-                }`}
+                className={`grid lg:grid-cols-2 gap-12 items-center ${index % 2 === 1 ? 'lg:flex-row-reverse' : ''
+                  }`}
               >
                 <div className={index % 2 === 1 ? 'lg:order-2' : ''}>
                   <h3 className="text-2xl font-bold text-foreground mb-4">{benefit.title}</h3>
@@ -257,9 +273,14 @@ export default function VorQard() {
                     {benefit.stats}
                   </span>
                 </div>
-                <div className={`aspect-video rounded-2xl bg-gradient-to-br from-secondary/10 to-accent/10 ${
-                  index % 2 === 1 ? 'lg:order-1' : ''
-                }`} />
+                <div className={`aspect-video rounded-2xl overflow-hidden shadow-xl ${index % 2 === 1 ? 'lg:order-1' : ''
+                  }`}>
+                  <img
+                    src={benefit.image}
+                    alt={benefit.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
               </motion.div>
             ))}
           </div>
@@ -341,13 +362,13 @@ export default function VorQard() {
               Be Among the First to Experience VorQard
             </h2>
             <p className="text-muted-foreground mb-8">
-              Join our exclusive beta program and help shape the future of healthcare management. 
+              Join our exclusive beta program and help shape the future of healthcare management.
               Get early access, priority support, and special founding member pricing.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center max-w-md mx-auto">
-              <Input 
-                placeholder="Enter your email" 
+              <Input
+                placeholder="Enter your email"
                 className="flex-1"
               />
               <Button variant="hero" className="bg-secondary hover:bg-secondary/90">

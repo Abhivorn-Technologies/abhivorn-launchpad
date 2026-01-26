@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { 
-  ArrowRight, Users, Clock, Shield, BarChart3, Smartphone, Database, 
-  Zap, CheckCircle, Star, DollarSign, CheckSquare, Building2, 
+import {
+  ArrowRight, Users, Clock, Shield, BarChart3, Smartphone, Database,
+  Zap, CheckCircle, Star, DollarSign, CheckSquare, Building2,
   Fingerprint, MapPin, Calendar, FileText, TrendingUp
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -134,7 +134,7 @@ export default function VornHR() {
               </h1>
 
               <p className="text-lg text-muted-foreground mb-8 max-w-lg">
-                Empower your workforce with an intelligent, data-driven HR platform. 
+                Empower your workforce with an intelligent, data-driven HR platform.
                 From payroll to performance, we automate it all with precision and ease.
               </p>
 
@@ -146,7 +146,7 @@ export default function VornHR() {
                   </Button>
                 </a>
                 <a href="https://www.vornhr.com/contact" target="_blank" rel="noopener noreferrer">
-                  <Button variant="heroOutline" size="xl">
+                  <Button variant="outline" size="xl" className="border-foreground/20 text-foreground hover:bg-foreground/5">
                     <Calendar className="mr-2 h-5 w-5" />
                     Book Demo
                   </Button>
@@ -195,8 +195,8 @@ export default function VornHR() {
               <div className="relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-secondary/20 to-accent/10 rounded-3xl blur-2xl" />
                 <div className="relative bg-card border border-border rounded-3xl p-2 shadow-2xl">
-                  <img 
-                    src="https://www.vornhr.com/hr_with_laptop.png" 
+                  <img
+                    src="https://www.vornhr.com/hr_with_laptop.png"
                     alt="VORN HR Dashboard Preview"
                     className="w-full rounded-2xl"
                   />
@@ -251,7 +251,7 @@ export default function VornHR() {
               Everything You Need in One Platform
             </h2>
             <p className="text-muted-foreground max-w-2xl mx-auto">
-              From core HR management to advanced analytics, our platform provides a complete suite 
+              From core HR management to advanced analytics, our platform provides a complete suite
               of tools to streamline your entire workforce operations.
             </p>
           </motion.div>
@@ -381,11 +381,10 @@ export default function VornHR() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className={`rounded-2xl p-8 ${
-                  plan.highlighted
+                className={`rounded-2xl p-8 ${plan.highlighted
                     ? 'bg-primary text-primary-foreground ring-2 ring-secondary shadow-xl scale-105'
                     : 'bg-card border border-border'
-                }`}
+                  }`}
               >
                 <h3 className={`text-xl font-bold mb-2 ${plan.highlighted ? '' : 'text-foreground'}`}>
                   {plan.name}
@@ -489,7 +488,7 @@ export default function VornHR() {
                 </Button>
               </a>
               <a href="https://www.vornhr.com/pricing" target="_blank" rel="noopener noreferrer">
-                <Button variant="heroOutline" size="xl" className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10">
+                <Button variant="outline" size="xl" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground/10">
                   Start Free Trial
                 </Button>
               </a>
