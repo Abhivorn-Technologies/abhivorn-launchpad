@@ -38,6 +38,8 @@ export default function Footer() {
               <img
                 src={logo}
                 alt="Abhivorn Technologies"
+                width="160"
+                height="40"
                 className="h-10 w-auto brightness-0 invert transition-all duration-300 group-hover:brightness-100 group-hover:invert-0"
               />
             </Link>

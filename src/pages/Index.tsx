@@ -105,60 +105,43 @@ export default function Index() {
 
         <div className="container-custom relative">
           <div className="py-20 lg:py-32">
-            <motion.div
-              initial="initial"
-              animate="animate"
-              variants={staggerContainer}
-              className="max-w-4xl mx-auto text-center"
-            >
-              <motion.div
-                variants={fadeInUp}
-                className="flex items-center justify-center gap-4 mb-6 flex-wrap"
-              >
-                <span className="px-4 py-1.5 rounded-full bg-accent/10 text-accent text-sm font-medium">
+            <div className="max-w-4xl mx-auto text-center animate-fade-in-up">
+              <div className="flex items-center justify-center gap-4 mb-6 flex-wrap">
+                <span className="px-4 py-1.5 rounded-full bg-accent/10 text-primary text-sm font-medium">
                   99.8% Uptime
                 </span>
-                <span className="px-4 py-1.5 rounded-full bg-secondary/10 text-secondary text-sm font-medium">
+                <span className="px-4 py-1.5 rounded-full bg-secondary/10 text-primary text-sm font-medium">
                   5,000+ Users
                 </span>
                 <span className="px-4 py-1.5 rounded-full bg-primary/10 text-primary text-sm font-medium">
                   MSME Registered
                 </span>
-              </motion.div>
+              </div>
 
-              <motion.h1
-                variants={fadeInUp}
-                className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight"
-              >
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground mb-6 leading-tight">
                 Enterprise-Grade{' '}
                 <span className="text-accent">HR & Healthcare</span>
                 {' '}Solutions
-              </motion.h1>
+              </h1>
 
-              <motion.p
-                variants={fadeInUp}
-                className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto"
-              >
+              <p className="text-lg sm:text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
                 Trusted by 10+ companies managing 5,000+ employees across India. Build, manage, and scale your business with our modern SaaS solutions.
-              </motion.p>
+              </p>
 
-              <motion.div
-                variants={fadeInUp}
-                className="flex flex-col sm:flex-row items-center justify-center gap-4"
-              >
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
                 <Link to="/contact">
-                  <Button variant="hero" size="xl">
+                  <Button variant="hero" size="xl" aria-label="Book a Demo for Enterprise Solutions">
                     Book a Demo
                     <ArrowRight className="ml-2 h-5 w-5" />
                   </Button>
                 </Link>
                 <Link to="/services">
-                  <Button variant="heroOutline" size="xl">
+                  <Button variant="heroOutline" size="xl" aria-label="View Our Products and Services">
                     View Our Products
                   </Button>
                 </Link>
-              </motion.div>
-            </motion.div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
