@@ -119,7 +119,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="mt-16 pt-8 border-t border-primary-foreground/20">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-primary-foreground/60 text-sm">
+            <p className="text-primary-foreground/60 text-sm text-center md:text-left">
               © 2026 Abhivorn Technologies Pvt Ltd. All rights reserved.
             </p>
             <div className="flex gap-6">

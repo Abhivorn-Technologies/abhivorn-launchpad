@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Users, Building, Clock, TrendingUp, Heart, Code, Zap, Shield, BarChart3, CheckCircle } from 'lucide-react';
+import { ArrowRight, Users, Building, TrendingUp, Heart, Code, Zap, BarChart3, CheckCircle } from 'lucide-react';
+import { FaReact, FaAws, FaDocker, FaPython } from 'react-icons/fa';
+import { SiDjango, SiPostgresql, SiTypescript, SiTailwindcss } from 'react-icons/si';
 import { Button } from '@/components/ui/button';
 import Layout from '@/components/layout/Layout';
 
@@ -81,14 +83,14 @@ const caseStudies = [
 ];
 
 const techStack = [
-  { name: 'React', icon: '⚛️' },
-  { name: 'Django', icon: '🐍' },
-  { name: 'PostgreSQL', icon: '🐘' },
-  { name: 'AWS', icon: '☁️' },
-  { name: 'TypeScript', icon: '📘' },
-  { name: 'Docker', icon: '🐳' },
-  { name: 'Python', icon: '🔷' },
-  { name: 'Tailwind', icon: '🎨' }
+  { name: 'React', icon: <FaReact className="text-[#61DAFB]" /> },
+  { name: 'Django', icon: <SiDjango className="text-[#092E20] dark:text-[#0C4B33]" /> },
+  { name: 'PostgreSQL', icon: <SiPostgresql className="text-[#336791]" /> },
+  { name: 'AWS', icon: <FaAws className="text-[#FF9900]" /> },
+  { name: 'TypeScript', icon: <SiTypescript className="text-[#3178C6]" /> },
+  { name: 'Docker', icon: <FaDocker className="text-[#2496ED]" /> },
+  { name: 'Python', icon: <FaPython className="text-[#3776AB]" /> },
+  { name: 'Tailwind', icon: <SiTailwindcss className="text-[#06B6D4]" /> }
 ];
 
 export default function Index() {
@@ -100,7 +102,7 @@ export default function Index() {
           <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent/10 rounded-full blur-3xl" />
           <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/10 rounded-full blur-3xl" />
         </div>
-        
+
         <div className="container-custom relative">
           <div className="py-20 lg:py-32">
             <motion.div
@@ -194,18 +196,18 @@ export default function Index() {
                     {product.badge}
                   </span>
                 )}
-                
+
                 <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center mb-6 group-hover:bg-accent/20 transition-colors">
                   <product.icon className="h-7 w-7 text-accent" />
                 </div>
-                
+
                 <h3 className="text-xl font-semibold text-foreground mb-2">
                   {product.title}
                 </h3>
                 <p className="text-muted-foreground mb-6">
                   {product.subtitle}
                 </p>
-                
+
                 <ul className="space-y-3 mb-8">
                   {product.features.map((feature) => (
                     <li key={feature} className="flex items-center gap-3 text-sm text-foreground/80">
@@ -286,14 +288,14 @@ export default function Index() {
                 <span className="inline-block px-3 py-1 rounded-full bg-accent/10 text-accent text-xs font-medium mb-4">
                   {study.industry}
                 </span>
-                
+
                 <h3 className="text-lg font-semibold text-foreground mb-3">
                   {study.company}
                 </h3>
                 <p className="text-muted-foreground mb-4">
                   {study.result}
                 </p>
-                
+
                 <div className="flex items-center gap-2 text-accent font-medium mb-6">
                   <BarChart3 className="h-4 w-4" />
                   {study.metric}
@@ -357,7 +359,7 @@ export default function Index() {
           <div className="absolute top-0 right-0 w-96 h-96 bg-accent/20 rounded-full blur-3xl" />
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-secondary/20 rounded-full blur-3xl" />
         </div>
-        
+
         <div className="container-custom relative">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -372,7 +374,7 @@ export default function Index() {
             <p className="text-lg text-primary-foreground/80 mb-10">
               Join 10+ companies already using our solutions to streamline operations and boost productivity.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link to="/contact">
                 <Button variant="hero" size="xl" className="bg-accent hover:bg-accent/90">
